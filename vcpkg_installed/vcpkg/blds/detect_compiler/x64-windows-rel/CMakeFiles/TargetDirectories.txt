@@ -1,0 +1,2 @@
+C:/Users/Seth/source/repos/CptS 122 Game/vcpkg_installed/vcpkg/blds/detect_compiler/x64-windows-rel/CMakeFiles/edit_cache.dir
+C:/Users/Seth/source/repos/CptS 122 Game/vcpkg_installed/vcpkg/blds/detect_compiler/x64-windows-rel/CMakeFiles/rebuild_cache.dir
