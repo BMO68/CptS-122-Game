@@ -134,8 +134,7 @@
     <ClCompile Include="Sources\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Background.hpp" />
-    <ClInclude Include="Headers\ComputerPlayer.hpp" />
+    <ClInclude Include="Headers\Level.hpp" />
     <ClInclude Include="Headers\Game.hpp" />
     <ClInclude Include="Headers\Player.hpp" />
     <ClInclude Include="Headers\Vehicle.hpp" />

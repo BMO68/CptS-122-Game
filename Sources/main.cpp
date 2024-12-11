@@ -1,22 +1,13 @@
+#pragma once
 #include "../Headers/Game.hpp"
-#include "../Headers/Background.hpp"
+#include "../Headers/Level.hpp"
+#include "../Headers/Player.hpp"
 
 int main() {
- 
-    sf::RenderWindow window(sf::VideoMode(1200, 700), "SFML Window");
 
-    
-    // Main loop
-    while (window.isOpen()) {
-        Window bg;
-        bg.drawBackground(window);
+    Game obj;
 
-
-        
-        
-        window.display();
-    }
+    obj.runGame();
 
     return 0;
-
 }

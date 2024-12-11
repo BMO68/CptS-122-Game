@@ -29,10 +29,7 @@
     <ClInclude Include="Headers\Vehicle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\ComputerPlayer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Background.hpp">
+    <ClInclude Include="Headers\Level.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

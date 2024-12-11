@@ -16,12 +16,8 @@ public:
 	}
 
 	void drawPlayer(sf::RenderWindow& window) {
-		sf::RectangleShape player(sf::Vector2f(50, 50));
-		player.setFillColor(getColor());
-		player.setPosition(100, 100);
-		window.draw(player);
+		drawVehicle(window);
 	}
-
 private:
 
 };
