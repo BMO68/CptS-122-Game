@@ -20,7 +20,11 @@ public:
 
 	void runGame();
 
+    int playGame(sf::RenderWindow& window);
+
     void runMenu(sf::RenderWindow &window);
+
+	void runWinScreen(sf::RenderWindow& window, int winner);
 
     void displayRules(sf::RenderWindow& window);
 
@@ -80,19 +84,43 @@ void Game::displayRules(sf::RenderWindow& window) {
 
 }
 
-void Game::runGame() {
-    sf::RenderWindow window(sf::VideoMode(1200, 700), "SFML Window");
+int Game::playGame(sf::RenderWindow& window) {
+    sf::Time timer = sf::seconds(0);
+    sf::Clock clock;
+
     Player p1, p2;
     p1.setXPosition(50);
     p1.setYPosition(380);
     p2.setXPosition(50);
     p2.setYPosition(300);
+    p1.setColor(sf::Color::Blue);
+    p2.setColor(sf::Color::Red);
+
+    Level l1;
+
+    int i = 0; int* ip = &i;
 
     runMenu(window);
 
     while (window.isOpen()) {
-        sf::Event event;
+        l1.drawBackground(window);
 
+        sf::Color color;
+        if (*ip < 350) { 
+            color = sf::Color::Blue;
+        }
+        if (*ip >= 350) {
+            color = sf::Color::Red;
+        }
+		if (*ip == 700) {
+			*ip = 0;
+		}
+        *ip += 1;
+        sf::Font font; font.loadFromFile("Assets/geo_1.ttf");
+        sf::Text mash; mash.setCharacterSize(70); mash.setFont(font); mash.setFillColor(color); mash.setPosition(500, 300); mash.setString("MASH!");
+        window.draw(mash);
+
+        sf::Event event; 
 
         while (window.pollEvent(event)) {
             switch (event.type) {
@@ -112,10 +140,15 @@ void Game::runGame() {
             }
         }
 
-        //game
+		if (p1.getXPosition() > 1190) {
+			return 1;
+		}
+        if (p2.getXPosition() > 1190) {
+            return 2;
+        }
 
-        Level l1;
-        l1.drawBackground(window);
+
+        //game
 
 
         p1.drawPlayer(window);
@@ -123,6 +156,7 @@ void Game::runGame() {
 
         window.display();
     }
+    return 0;
 }
 
 void Game::runMenu(sf::RenderWindow& window) {
@@ -131,7 +165,7 @@ void Game::runMenu(sf::RenderWindow& window) {
     yPosition1 = 170; yPosition2 = 500;
 
     sf::Clock clock;
-    sf::Time timePerFrame = sf::seconds(1.f / 60.f); // 60 FPS, can change to whatever I want
+    sf::Time timePerFrame = sf::seconds(1.f / 60.f); // 60 FPS, can change later if needed
 
     while (window.isOpen()) {
         sf::Event event;
@@ -190,6 +224,61 @@ void Game::runMenu(sf::RenderWindow& window) {
         drawDiffCar(window, &xPosition1, &yPosition1, 150 * dt, sf::Color::Red);
         drawDiffCar(window, &xPosition2, &yPosition2, -250 * dt, sf::Color::Blue);
 
-        window.display(); // Add this line to display the menu
+        window.display();
+    }
+}
+
+void Game::runGame() {
+    sf::RenderWindow window(sf::VideoMode(1200, 700), "Drag Racers", sf::Style::Close | sf::Style::Titlebar);
+
+    while (window.isOpen())  {
+        
+        int win = 0;
+
+        win = playGame(window);
+
+		if (win == 1) {
+			std::cout << "Player 1 wins!" << std::endl;
+            runWinScreen(window, 1);
+		}
+		if (win == 2) {
+			std::cout << "Player 2 wins!" << std::endl;
+            runWinScreen(window, 2);
+		}
+    }
+}
+
+void Game::runWinScreen(sf::RenderWindow& window, int winner) {
+
+    sf::Time timer = sf::seconds(0);
+    sf::Clock clock;
+
+    while (window.isOpen() && timer < sf::seconds(3)) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        window.clear(sf::Color(100, 100, 100));
+        sf::Font font;
+        if (!font.loadFromFile("Assets/geo_1.ttf")) {
+            return; // Exit the function if the font cannot be loaded
+        }
+
+        sf::Text winText;
+        winText.setString(""); winText.setFont(font); winText.setCharacterSize(150); winText.setPosition(150, 220); winText.setFillColor(sf::Color::Black); 
+        if (winner == 1) {
+            winText.setFillColor(sf::Color::Blue); winText.setString("Player 1 Wins!");
+        }
+		if (winner == 2) {
+			winText.setFillColor(sf::Color::Red); winText.setString("Player 2 Wins!");
+		}
+        window.draw(winText);
+
+        timer += clock.restart();
+
+        window.display();
     }
 }
