@@ -88,9 +88,6 @@ void Game::displayRules(sf::RenderWindow& window) { //displays the rules of the 
 }
 
 int Game::playGame(sf::RenderWindow& window) { //hands player keyboard inputs and game logic for when to end player control
-    sf::Time timer = sf::seconds(0);
-    sf::Clock clock;
-
     Player p1, p2;
     p1.setXPosition(50);
     p1.setYPosition(380);
@@ -104,6 +101,9 @@ int Game::playGame(sf::RenderWindow& window) { //hands player keyboard inputs an
     int i = 0; int* ip = &i;
 
     runMenu(window);
+
+    sf::Time timer = sf::seconds(0);
+    sf::Clock clock;
 
     while (window.isOpen()) {
         l1.drawBackground(window);
