@@ -12,3 +12,9 @@ and player 2 controls the Up key.
 
 Notes: made primarily with C++ (no clue why GitHub says it was made with mostly C)
 and a downloaded SFML library
+
+Link to our demo Youtube video: https://youtu.be/NGpG-3RCQPw
+
+Link to our second game (a maze generator game): https://github.com/treyahill/Maze-Game
+
+Link to out first game (a basic reconstruction of Uno): https://github.com/treyahill/CptS-122-Uno-Game
