@@ -22,7 +22,7 @@ public:
 	~Vehicle() { }
 
 	void increaseSpeed() {
-		setSpeed(speed += speed + 0.000001); //0.000001
+		setSpeed(speed + 0.2); //0.000001
 	}
 
 	float getSpeed() {

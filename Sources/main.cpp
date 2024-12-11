@@ -2,12 +2,16 @@
 #include "../Headers/Game.hpp"
 #include "../Headers/Level.hpp"
 #include "../Headers/Player.hpp"
+#include "../Headers/Test.hpp"
 
 int main() {
 
-    Game obj;
+   /* Game obj;
 
-    obj.runGame();
+    obj.runGame();*/
+
+       Test testClass;
+       testClass.TestTest();
 
     return 0;
 }

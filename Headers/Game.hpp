@@ -12,10 +12,12 @@
 #include "Level.hpp"
 #include <random>
 #include <time.h>
+#include <iomanip>
+#include <cmath>
 
 class Game {
 public:
-	Game() {}
+    Game() { winSeconds = 0; }
 	~Game() {}
 
 	void runGame();
@@ -28,13 +30,13 @@ public:
 
     void displayRules(sf::RenderWindow& window);
 
-    void drawDiffCar(sf::RenderWindow& window, float *xPosition, float *yPosition, float speed, sf::Color color);
+    void drawMenuCar(sf::RenderWindow& window, float *xPosition, float *yPosition, float speed, sf::Color color);
 
 private:
-
+    float winSeconds;
 };
 
-void Game::drawDiffCar(sf::RenderWindow& window, float* xPosition, float* yPosition, float speed, sf::Color color) {
+void Game::drawMenuCar(sf::RenderWindow& window, float* xPosition, float* yPosition, float speed, sf::Color color) {
     sf::RectangleShape vehicleBody(sf::Vector2f(76, 46)); vehicleBody.setFillColor(color); vehicleBody.setOutlineColor(sf::Color::Black); vehicleBody.setOutlineThickness(2);
     sf::RectangleShape vehicleRoof(sf::Vector2f(56, 43)); vehicleRoof.setFillColor(sf::Color::Black);
     *xPosition += speed;
@@ -106,13 +108,13 @@ int Game::playGame(sf::RenderWindow& window) {
         l1.drawBackground(window);
 
         sf::Color color;
-        if (*ip < 350) { 
+        if (*ip < 20) { 
             color = sf::Color::Blue;
         }
-        if (*ip >= 350) {
+        if (*ip >= 20) {
             color = sf::Color::Red;
         }
-		if (*ip == 700) {
+		if (*ip == 40) {
 			*ip = 0;
 		}
         *ip += 1;
@@ -141,15 +143,15 @@ int Game::playGame(sf::RenderWindow& window) {
         }
 
 		if (p1.getXPosition() > 1190) {
-			return 1;
+            winSeconds = timer.asSeconds();
+            return 1;
 		}
         if (p2.getXPosition() > 1190) {
+            winSeconds = timer.asSeconds();
             return 2;
         }
 
-
-        //game
-
+        timer += clock.restart();
 
         p1.drawPlayer(window);
         p2.drawPlayer(window);
@@ -164,8 +166,12 @@ void Game::runMenu(sf::RenderWindow& window) {
     xPosition1 = 0; xPosition2 = 0;
     yPosition1 = 170; yPosition2 = 500;
 
-    sf::Clock clock;
-    sf::Time timePerFrame = sf::seconds(1.f / 60.f); // 60 FPS, can change later if needed
+ //   sf::Clock clock;
+ //   sf::Time timePerFrame = sf::seconds(1.f / 60.f); // 60 FPS, can change later if needed                                                                                      _       _
+	//sf::Time deltaTime = clock.restart(); //looked up how to fix too many position updates (refresh rate of my monitor was too high for it) and I found out what delta time is   \(^_^)/
+   /* if (deltaTime < timePerFrame) {
+        sf::sleep(timePerFrame - deltaTime);
+    }*/
 
     while (window.isOpen()) {
         sf::Event event;
@@ -183,11 +189,6 @@ void Game::runMenu(sf::RenderWindow& window) {
                     return;
                 }
             }
-        }
-
-        sf::Time deltaTime = clock.restart();
-        if (deltaTime < timePerFrame) {
-            sf::sleep(timePerFrame - deltaTime);
         }
 
         window.clear(sf::Color(100, 100, 100));
@@ -216,13 +217,11 @@ void Game::runMenu(sf::RenderWindow& window) {
         sf::Text option1; option1.setString("1) Rules"); option1.setFont(font); option1.setFillColor(sf::Color::Black); option1.setCharacterSize(40); option1.setPosition(350, 390); window.draw(option1);
         sf::Text option2; option2.setString("2) Play"); option2.setFont(font); option2.setFillColor(sf::Color::Black); option2.setCharacterSize(40); option2.setPosition(350, 440); window.draw(option2);
 
-        float dt = timePerFrame.asSeconds(); //displaying the cars at whatever my monitors refresh rate is was way too much so I had to force an fps limit
-
         if (xPosition1 > 1200) { xPosition1 = -70; }
         if (xPosition2 < -70) { xPosition2 = 1270; }
 
-        drawDiffCar(window, &xPosition1, &yPosition1, 150 * dt, sf::Color::Red);
-        drawDiffCar(window, &xPosition2, &yPosition2, -250 * dt, sf::Color::Blue);
+        drawMenuCar(window, &xPosition1, &yPosition1, 2, sf::Color::Red);
+        drawMenuCar(window, &xPosition2, &yPosition2, -5, sf::Color::Blue);
 
         window.display();
     }
@@ -230,6 +229,7 @@ void Game::runMenu(sf::RenderWindow& window) {
 
 void Game::runGame() {
     sf::RenderWindow window(sf::VideoMode(1200, 700), "Drag Racers", sf::Style::Close | sf::Style::Titlebar);
+    window.setFramerateLimit(60);
 
     while (window.isOpen())  {
         
@@ -238,11 +238,11 @@ void Game::runGame() {
         win = playGame(window);
 
 		if (win == 1) {
-			std::cout << "Player 1 wins!" << std::endl;
+			std::cout << "Player 1 wins in:" << std::endl;
             runWinScreen(window, 1);
 		}
 		if (win == 2) {
-			std::cout << "Player 2 wins!" << std::endl;
+			std::cout << "Player 2 wins in:" << std::endl;
             runWinScreen(window, 2);
 		}
     }
@@ -253,11 +253,14 @@ void Game::runWinScreen(sf::RenderWindow& window, int winner) {
     sf::Time timer = sf::seconds(0);
     sf::Clock clock;
 
-    while (window.isOpen() && timer < sf::seconds(3)) {
+    while (window.isOpen() && timer < sf::seconds(5)) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
+            }
+            if (timer.asSeconds() > 3 && event.type == sf::Event::KeyPressed) {
+                return;
             }
         }
 
@@ -268,14 +271,27 @@ void Game::runWinScreen(sf::RenderWindow& window, int winner) {
         }
 
         sf::Text winText;
-        winText.setString(""); winText.setFont(font); winText.setCharacterSize(150); winText.setPosition(150, 220); winText.setFillColor(sf::Color::Black); 
+        winText.setString(""); winText.setFont(font); winText.setCharacterSize(140); winText.setPosition(50, 220); winText.setFillColor(sf::Color::Black);
         if (winner == 1) {
-            winText.setFillColor(sf::Color::Blue); winText.setString("Player 1 Wins!");
+            winText.setFillColor(sf::Color::Blue); winText.setString("Player 1 Wins In:");
         }
-		if (winner == 2) {
-			winText.setFillColor(sf::Color::Red); winText.setString("Player 2 Wins!");
-		}
+        if (winner == 2) {
+            winText.setFillColor(sf::Color::Red); winText.setString("Player 2 Wins In:");
+        }
         window.draw(winText);
+
+
+        sf::Text winTextTime;
+        std::string winTimeSeconds = std::to_string(winSeconds);
+        winTextTime.setString(winTimeSeconds); winTextTime.setFont(font); winTextTime.setCharacterSize(90); winTextTime.setPosition(150, 500);
+        if (winner == 1) { winTextTime.setFillColor(sf::Color::Blue); }
+        if (winner == 2) { winTextTime.setFillColor(sf::Color::Red); }
+        window.draw(winTextTime);
+
+        sf::Text in; in.setString(" Seconds!"); in.setFont(font); in.setCharacterSize(90); in.setPosition(150 + winTextTime.getLocalBounds().width, 500);
+        if (winner == 1) { in.setFillColor(sf::Color::Blue); }
+        if (winner == 2) { in.setFillColor(sf::Color::Red); }
+        window.draw(in);
 
         timer += clock.restart();
 

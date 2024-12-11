@@ -1,6 +1,4 @@
-#ifndef LEVEL_HPP
-#define LEVEL_HPP
-
+#pragma once
 #include "Game.hpp"
 
 class Level {
@@ -97,5 +95,3 @@ public:
 private:
 
 };
-
-#endif // LEVEL_HPP
