@@ -1,3 +1,4 @@
+/* this file contains the class Vehicle: base class for player (since each car is controlled by a player) */
 #pragma once
 #include "../Headers/Game.hpp"
 #include <iostream>
@@ -7,57 +8,57 @@
 
 class Vehicle {
 public:
-	Vehicle() {
+	Vehicle() { //contructor
 		speed = 0;
 		color = sf::Color::White;
 		xPosition = 0;
 		yPosition = 0;
 	}
-	Vehicle(sf::Color newColor, float newSpeed, float newXPosition, float newYPosition, float newWidth, float newHeight) {
+	Vehicle(sf::Color newColor, float newSpeed, float newXPosition, float newYPosition, float newWidth, float newHeight) { //overloaded constructor
 		color = newColor;
 		speed = newSpeed;
 		xPosition = newXPosition;
 		yPosition = newYPosition;
 	}
-	~Vehicle() { }
+	~Vehicle() { } //destructor
 
-	void increaseSpeed() {
+	void increaseSpeed() { //increases "speed" of the vehicle
 		setSpeed(speed + 0.2); //0.000001
 	}
 
-	float getSpeed() {
+	float getSpeed() { //gets the "speed" of the vehicle
 		return speed;
 	}
 
-	void setSpeed(float newSpeed) {
+	void setSpeed(float newSpeed) { //sets the "speed" of the vehicle
 		speed = newSpeed;
 	}
 
-	sf::Color getColor() {
+	sf::Color getColor() { //gets the color of the vehicle in sfml format
 		return color;
 	}
 
-	void setColor(sf::Color newColor) {
+	void setColor(sf::Color newColor) { //seth the color of the vehicle in sfml format
 		color = newColor;
 	}
 
-	float getXPosition() {
+	float getXPosition() { //gets the x position of the vehicle
 		return xPosition;
 	}
 
-	float getYPosition() {
+	float getYPosition() { //gets the y position of the vehicle
 		return yPosition;
 	}
 
-	void setXPosition(float newX) {
+	void setXPosition(float newX) { //sets the x position of the vehicle
 		xPosition = newX;
 	}	
 
-	void setYPosition(float newY) {
+	void setYPosition(float newY) { //sets the y position of the vehicle
 		yPosition = newY;
 	}
 
-	void drawVehicle(sf::RenderWindow& window) {
+	void drawVehicle(sf::RenderWindow& window) { //accepts an sfml window stream and draws the vehicle which a player controls
 		sf::RectangleShape vehicleBody(sf::Vector2f(56, 26)); vehicleBody.setFillColor(color); vehicleBody.setOutlineColor(sf::Color::Black); vehicleBody.setOutlineThickness(2); 
 		sf::RectangleShape vehicleRoof(sf::Vector2f(36, 24)); vehicleRoof.setFillColor(sf::Color::Black);   
 		xPosition += speed;

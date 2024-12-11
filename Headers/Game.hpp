@@ -1,4 +1,4 @@
-/* This is the main header file for our project */
+/* This header file contains our Game class and important libraries which our other files referece */
 
 #pragma once
 #include <iostream>
@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <cmath>
 
+/* game class which contains functions that execute our game logic */
 class Game {
 public:
     Game() { winSeconds = 0; }
@@ -36,7 +37,7 @@ private:
     float winSeconds;
 };
 
-void Game::drawMenuCar(sf::RenderWindow& window, float* xPosition, float* yPosition, float speed, sf::Color color) {
+void Game::drawMenuCar(sf::RenderWindow& window, float* xPosition, float* yPosition, float speed, sf::Color color) { //draws an npc car for the menu screen
     sf::RectangleShape vehicleBody(sf::Vector2f(76, 46)); vehicleBody.setFillColor(color); vehicleBody.setOutlineColor(sf::Color::Black); vehicleBody.setOutlineThickness(2);
     sf::RectangleShape vehicleRoof(sf::Vector2f(56, 43)); vehicleRoof.setFillColor(sf::Color::Black);
     *xPosition += speed;
@@ -44,7 +45,7 @@ void Game::drawMenuCar(sf::RenderWindow& window, float* xPosition, float* yPosit
     vehicleRoof.setPosition(*xPosition + 10, *yPosition + 1); window.draw(vehicleRoof);
 }
 
-void Game::displayRules(sf::RenderWindow& window) {
+void Game::displayRules(sf::RenderWindow& window) { //displays the rules of the game at the beginning 
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -86,7 +87,7 @@ void Game::displayRules(sf::RenderWindow& window) {
 
 }
 
-int Game::playGame(sf::RenderWindow& window) {
+int Game::playGame(sf::RenderWindow& window) { //hands player keyboard inputs and game logic for when to end player control
     sf::Time timer = sf::seconds(0);
     sf::Clock clock;
 
@@ -161,7 +162,7 @@ int Game::playGame(sf::RenderWindow& window) {
     return 0;
 }
 
-void Game::runMenu(sf::RenderWindow& window) {
+void Game::runMenu(sf::RenderWindow& window) { //runs the menu screen for the game
     float xPosition1, yPosition1, xPosition2, yPosition2;
     xPosition1 = 0; xPosition2 = 0;
     yPosition1 = 170; yPosition2 = 500;
@@ -227,7 +228,7 @@ void Game::runMenu(sf::RenderWindow& window) {
     }
 }
 
-void Game::runGame() {
+void Game::runGame() { //encapsulates the Game member functions and uses them to run the entire game and window
     sf::RenderWindow window(sf::VideoMode(1200, 700), "Drag Racers", sf::Style::Close | sf::Style::Titlebar);
     window.setFramerateLimit(60);
 
@@ -248,7 +249,7 @@ void Game::runGame() {
     }
 }
 
-void Game::runWinScreen(sf::RenderWindow& window, int winner) {
+void Game::runWinScreen(sf::RenderWindow& window, int winner) { //after a "win" this function accepts a player winner (int) and displays a win screen with a timer
 
     sf::Time timer = sf::seconds(0);
     sf::Clock clock;

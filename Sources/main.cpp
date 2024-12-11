@@ -1,3 +1,4 @@
+/* MAIN: creates a game object and calls upon the member fuction runGame to run our game */
 #pragma once
 #include "../Headers/Game.hpp"
 #include "../Headers/Level.hpp"
@@ -6,12 +7,12 @@
 
 int main() {
 
-   /* Game obj;
+    Game obj;
 
-    obj.runGame();*/
+    obj.runGame();
 
-       Test testClass;
-       testClass.TestTest();
+       /*Test testClass;
+       testClass.TestTest();*/
 
     return 0;
 }

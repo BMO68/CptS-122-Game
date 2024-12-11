@@ -1,3 +1,4 @@
+/* this file contains class Level: encaspulates functions that draw the background of the first level of our game */
 #pragma once
 #include "Game.hpp"
 
@@ -6,7 +7,7 @@ public:
     Level() {}
     ~Level() {}
 
-    void drawBackground(sf::RenderWindow &window) {
+    void drawBackground(sf::RenderWindow &window) { //draws the background of the base level of our game
         window.clear(sf::Color(36, 255, 36));
 
         sf::RectangleShape road(sf::Vector2f(1200, 200));
@@ -33,7 +34,7 @@ public:
         drawEnd(window);
     }
 
-    void drawTree(float x, float y, sf::RenderWindow &window) {
+    void drawTree(float x, float y, sf::RenderWindow &window) { //draws a tree for our background
         sf::CircleShape treeTop(30);
         sf::Color forestGreen(34, 139, 34);
         treeTop.setFillColor(forestGreen);
@@ -41,14 +42,14 @@ public:
         window.draw(treeTop);
     }
 
-    void drawPond(float x, float y, sf::RenderWindow &window) {
+	void drawPond(float x, float y, sf::RenderWindow& window) { //draws a pond for our background
         sf::CircleShape pond(60);
         pond.setFillColor(sf::Color::Blue);
         pond.setPosition(x, y);
         window.draw(pond);
     }
 
-    void drawHouse(float x, float y, sf::RenderWindow& window) {
+	void drawHouse(float x, float y, sf::RenderWindow& window) { //draws a house and driveway for our background
         sf::RectangleShape house(sf::Vector2f(120, 120));
         sf::RectangleShape driveway(sf::Vector2f(30, 50));
         driveway.setFillColor(sf::Color(50, 50, 50));
@@ -59,7 +60,7 @@ public:
         window.draw(driveway);
     }
 
-    void drawEnd(sf::RenderWindow& window) {
+	void drawEnd(sf::RenderWindow& window) { //draws the end of the track for our background
         sf::RectangleShape whiteSquare(sf::Vector2f(20, 20));
         whiteSquare.setFillColor(sf::Color::White);
         sf::RectangleShape blackSquare(sf::Vector2f(20, 20));
@@ -78,7 +79,7 @@ public:
         }
     }
 
-    void drawText(std::string& text, float x, float y, int charSize, sf::Color color, sf::RenderWindow& window) {
+	void drawText(std::string& text, float x, float y, int charSize, sf::Color color, sf::RenderWindow& window) { //draws text to the screen (did not implement, but I probably should have)
         sf::Font font;
         if (!font.loadFromFile("Assets/OPTITimes-Roman.otf")) {
             // Handle error

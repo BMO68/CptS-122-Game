@@ -1,7 +1,9 @@
+/* This file contains our test class with test member functions similar to our functional ones in the game which I demonstrate in the shared video */
 #pragma once
 #include "Game.hpp"
 #include "Player.hpp"
 
+/* Our test class (see above) */
 class Test {
 public:
 	Test() {}
@@ -20,6 +22,7 @@ public:
     int testDrawMenuCar(sf::RenderWindow &window, float* xPosition, float* yPosition, float speed, sf::Color color);
 };
 
+/* Test class member function: TestTests; generates a prompt in Debug window with 5 options for each test case within TestTest */
 void Test::TestTest() {
     sf::RenderWindow window(sf::VideoMode(1200, 700), "Drag Racers TEST", sf::Style::Close | sf::Style::Titlebar);
     window.setFramerateLimit(60);
@@ -57,6 +60,7 @@ void Test::TestTest() {
     }
 }
 
+/* Test member function TestMenu; tests an example menu in an sfml window */
 int Test::testMenu(sf::RenderWindow &window) {
     float xPosition1, yPosition1, xPosition2, yPosition2;
     xPosition1 = 0; xPosition2 = 0;
@@ -117,6 +121,7 @@ int Test::testMenu(sf::RenderWindow &window) {
     return 0;
 }
 
+/* Test member function testWinScreen: accepts a stream for an sfml window and generates an example win screen in an sfml window */
 int Test::testWinScreen(sf::RenderWindow &window) {
 
     while (window.isOpen()) {
@@ -157,6 +162,8 @@ int Test::testWinScreen(sf::RenderWindow &window) {
     return 0;
 }
 
+/*Test member function testCar: accepts an smfl window stream and displays a car to the window which can be moved 
+by using the up arrow key */
 int Test::testCar(sf::RenderWindow &window) {
 
     Player p1;
@@ -189,6 +196,7 @@ int Test::testCar(sf::RenderWindow &window) {
     return 0;
 }
 
+/* Test member function testRules: accepts a stream to an sfml window and outpots an example rule screen */
 int Test::testRules(sf::RenderWindow &window) {
 	while (window.isOpen()) {
 		sf::Event event;
@@ -224,6 +232,7 @@ int Test::testRules(sf::RenderWindow &window) {
 
 }
 
+/* Test member function testDrawMenuCar: accpets a stream for an sfml window, an x and y positon (floats) for their location in the window, a speed, and a color */
 int Test::testDrawMenuCar(sf::RenderWindow &window, float* xPosition, float* yPosition, float speed, sf::Color color) {
     sf::RectangleShape vehicleBody(sf::Vector2f(76, 46)); vehicleBody.setFillColor(color); vehicleBody.setOutlineColor(sf::Color::Black); vehicleBody.setOutlineThickness(2);
     sf::RectangleShape vehicleRoof(sf::Vector2f(56, 43)); vehicleRoof.setFillColor(sf::Color::Black);
